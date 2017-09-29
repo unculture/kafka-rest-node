@@ -24,6 +24,8 @@ var consumerGroup = argv.group;
 var messageLimit = argv['message-limit'];
 var fromBeginning = argv['from-beginning'];
 var format = argv.format || "avro";
+var proxy = argv.proxy || null;
+
 var help = (argv.help || argv.h);
 
 if (help || topicName === undefined || (format != "binary" && format != "avro")) {
@@ -36,7 +38,7 @@ if (help || topicName === undefined || (format != "binary" && format != "avro"))
 if (consumerGroup === undefined)
     consumerGroup = "console-consumer-" + Math.round(Math.random() * 100000);
 
-var kafka = new KafkaRest({"url": api_url});
+var kafka = new KafkaRest({url: api_url, proxy});
 var consumed = 0;
 var consumerConfig = {
     "format": format
